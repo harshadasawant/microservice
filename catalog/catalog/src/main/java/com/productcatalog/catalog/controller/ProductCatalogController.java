@@ -29,15 +29,13 @@ public class ProductCatalogController {
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
 //        WebClient.Builder builder= WebClient.builder();
 
-//        RestTemplate restTemplate = new RestTemplate();
-
-UserRating userRating = restTemplate.getForObject("http://localhost:8082/ratings/users/"+userId, UserRating.class);
+UserRating userRating = restTemplate.getForObject("http://rating-service/ratings/users/"+userId, UserRating.class);
         List<Rating> ratings =userRating.getUserRating();
     return ratings.stream().map(rating->{
         System.out.println(rating.getProductId());
-    String url = "http://localhost:8081/product/"+rating.getProductId();
-//    Product product = restTemplate.getForObject(url,Product.class);
-        Product product = webClientBuilder.build().get().uri(url).retrieve().bodyToMono(Product.class).block();
+    String url = "http://product-service/product/"+rating.getProductId();
+    Product product = restTemplate.getForObject(url,Product.class);
+//        Product product = webClientBuilder.build().get().uri(url).retrieve().bodyToMono(Product.class).block();
     return new CatalogItem(product.getName(),"Description",rating.getRatigs());
 
         }).collect(Collectors.toList());

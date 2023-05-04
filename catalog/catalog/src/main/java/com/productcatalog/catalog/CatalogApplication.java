@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class CatalogApplication {
 
 @Bean
-//@LoadBalanced
+@LoadBalanced
 public RestTemplate restTemplate(){
 	return new RestTemplate();
 }
