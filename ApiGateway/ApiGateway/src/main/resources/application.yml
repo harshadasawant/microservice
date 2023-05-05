@@ -23,6 +23,10 @@ spring:
           predicates:
             - Path=/catalog/**
 
+        - id: item-service
+          uri: lb://mongodb-service
+          predicates:
+            - Path=/item/**
 
 eureka:
   instance:

@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CatalogItem {
     String name;
-    String desc;
+    String category;
     int rate;
 
 }

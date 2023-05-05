@@ -1,9 +1,6 @@
 package com.productcatalog.catalog.controller;
 
-import com.productcatalog.catalog.dto.CatalogItem;
-import com.productcatalog.catalog.dto.Product;
-import com.productcatalog.catalog.dto.Rating;
-import com.productcatalog.catalog.dto.UserRating;
+import com.productcatalog.catalog.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +32,12 @@ UserRating userRating = restTemplate.getForObject("http://rating-service/ratings
         System.out.println(rating.getProductId());
     String url = "http://product-service/product/"+rating.getProductId();
     Product product = restTemplate.getForObject(url,Product.class);
+
+        GroceryItem item = restTemplate.getForObject("http://mongodb-service/item/Whole Wheat Biscuit",GroceryItem.class);
+
+
 //        Product product = webClientBuilder.build().get().uri(url).retrieve().bodyToMono(Product.class).block();
-    return new CatalogItem(product.getName(),"Description",rating.getRatigs());
+    return new CatalogItem(product.getName(),item.getCategory(),rating.getRatigs());
 
         }).collect(Collectors.toList());
 //    List<CatalogItem> catalogItemList= Stream.of(new CatalogItem("CatalogItem","description",2), new CatalogItem("CatalogItem1","Description2",3)).collect(Collectors.toList());
